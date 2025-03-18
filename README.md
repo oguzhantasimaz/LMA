@@ -16,6 +16,15 @@ pnpm i
 pnpm run dev
 ```
 
+## Setup 
+
+Fill in the environment variables in the `.env` file.
+Example is provided in the `.env.example` file.
+
+I used upstash for caching and lock mechanism for borrowing operations. You can create a free account at https://upstash.com/ and get the URL for the Redis instance.
+
+Also for postgres, you can use supabase or any other postgres instance.
+
 ## API Documentation
 
 Server running on port 3000

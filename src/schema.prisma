@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id         Int         @id @default(autoincrement())
+  name       String
+  email      String      @unique
+  password   String      // Added password field
+  role       Role        @default(USER) // Added role field
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  borrowings Borrowing[]
+}
+
+// Add Role enum for user permissions
+enum Role {
+  USER
+  ADMIN
+}
+
+model Book {
+  id            Int         @id @default(autoincrement())
+  title         String
+  author        String
+  description   String?
+  available     Boolean     @default(true)
+  totalRatings  Int         @default(0)
+  ratingCount   Int         @default(0)
+  averageRating Float       @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  borrowings    Borrowing[]
+}
+
+model Borrowing {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  bookId     Int
+  borrowDate DateTime  @default(now())
+  returnDate DateTime?
+  rating     Int?
+  returned   Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  user       User      @relation(fields: [userId], references: [id])
+  book       Book      @relation(fields: [bookId], references: [id])
+}
+

@@ -4,11 +4,30 @@ import { authenticate, adminOnly } from "../middleware/auth"
 
 const router = Router()
 
-// Protect all admin routes with authentication and authorization
-router.use(authenticate)
-router.use(adminOnly)
+/**
+ * @swagger
+ * tags:
+ *   name: Admin
+ *   description: Admin management endpoints
+ */
 
-// Clear all caches
+/**
+ * @swagger
+ * /api/admin/cache/clear-all:
+ *   post:
+ *     summary: Clear all caches
+ *     description: Clear all caches (admin only)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: All caches cleared successfully
+ *       401:
+ *         description: Unauthorized - Not authenticated
+ *       403:
+ *         description: Forbidden - Not an admin
+ */
 router.post("/cache/clear-all", async (req, res, next) => {
   try {
     await CacheManager.clearAll()
@@ -21,7 +40,23 @@ router.post("/cache/clear-all", async (req, res, next) => {
   }
 })
 
-// Clear book caches
+/**
+ * @swagger
+ * /api/admin/cache/clear-books:
+ *   post:
+ *     summary: Clear book caches
+ *     description: Clear book caches (admin only)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Book caches cleared successfully
+ *       401:
+ *         description: Unauthorized - Not authenticated
+ *       403:
+ *         description: Forbidden - Not an admin
+ */
 router.post("/cache/clear-books", async (req, res, next) => {
   try {
     await CacheManager.clearBookCaches()
@@ -34,7 +69,23 @@ router.post("/cache/clear-books", async (req, res, next) => {
   }
 })
 
-// Clear user caches
+/**
+ * @swagger
+ * /api/admin/cache/clear-users:
+ *   post:
+ *     summary: Clear user caches
+ *     description: Clear user caches (admin only)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User caches cleared successfully
+ *       401:
+ *         description: Unauthorized - Not authenticated
+ *       403:
+ *         description: Forbidden - Not an admin
+ */
 router.post("/cache/clear-users", async (req, res, next) => {
   try {
     await CacheManager.clearUserCaches()

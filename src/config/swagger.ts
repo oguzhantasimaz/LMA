@@ -77,7 +77,7 @@ const options: swaggerJsdoc.Options = {
       },
     },
   },
-  apis: ['./src/routes/*.ts', './src/controllers/*.ts'],  // Path to the API docs
+  apis: ['./src/routes/*.ts'], // This should already include adminRoutes
 };
 
 // Initialize swagger-jsdoc
